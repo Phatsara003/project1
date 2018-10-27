@@ -55,7 +55,7 @@ db.settings({
       </div>
     </ons-toolbar>
 
-    <ons-tabbar swipeable position="auto">
+    <ons-tabbar swipeable position="auto" id="tabbar">
       <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" badge="7" active>
       </ons-tab>
       <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
@@ -84,7 +84,7 @@ db.settings({
       <script id="icon_template" type="text/template">
         <ons-row style="height:120px" vertical-align="center">  
         <% categories.forEach(function(category){%>  
-        <ons-col style="background:#FFC0CB;border:solid 1px black;" width="33%">
+        <ons-col style="background:#FFC0CB;border:solid 1px black;" width="33%" onclick="changTab('<%= category.name %>')">
           <p style="text-align: center; margin: 10px;">
             <ons-icon size="60px" icon="<%= category.icon %>"></ons-icon>
           </p>
@@ -138,7 +138,7 @@ db.settings({
         <ons-search-input placeholder="Search" onchange="ons.notification.alert('Searched for: ' + this.value)"></ons-search-input>
       </p>
       <hr>
-      <p text-center><b text-center>แบรนด์สุดฮิต</b> อัพเดทใหม่วันนี้</p>
+      <p><b>แบรนด์สุดฮิต</b> อัพเดทใหม่วันนี้</p>
       
       <ons-row>
           <div id="allP"></div>
@@ -182,14 +182,30 @@ db.settings({
       console.log('Cart clicked');
       // get data for cart screen  
       getCartData();
-    }
-    else if (event.index == 2) {
-      console.log('product clicked');
-      // get data for cart screen  
-      getproductData();
-    }
+    }else if (event.index == 2) {
+
+        console.log('All product clicked');
+        var name1 = localStorage.getItem('name');
+        console.log("test"+name1)
+        // get data for all product screen  
+        if(name1==null){
+        console.log(name1)
+        getproductData();}
+    else{
+
+  getproductData(name1);
+}
+localStorage.clear();
+}
+});
+function changeTab(name) {
+localStorage.setItem('name', name);
+document.getElementById('tabbar').setActiveTab(2);
+}
+    
   });
   function getHomeData() {
+    $.getJSON('home.json' , function(data){}
     var docRef = db.collection("UI").doc("home");
     docRef.get().then(function (doc) {
 
@@ -214,10 +230,12 @@ db.settings({
       }
     }).catch(function (error) {
       console.log("Error getting document:", error);
-    });
+    }));
 
-    // $.getJSON('home.json', function (data) {
-    //   console.log(data);
+
+        function getCartData() {
+     $.getJSON('cart.json', function (data) {
+       console.log(data);
     // $('#appname').html(data.appname);
     //   var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
     //   $('#carousel1').attr('style', style)
@@ -226,29 +244,11 @@ db.settings({
     //   $('#icons').html(html);
     // });
   }
-  function getCartData() {
-    var docRef = db.collection("UI").doc("cart");
-    docRef.get().then(function (doc) {
-
-      if (doc.exists) {
-
-        //display data
-        console.log("Document data:", doc.data());
-        var data = doc.data();
-        var pic_template = $('#pic_template').html();
-        var html = ejs.render(pic_template, { cart: data.cart });
-        $('#pic').html(html);
-      } else {
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
-
-  }
+  
 
 
-  function getproductData() {
+  function getproductData(name1) {
+    if(name1==null){
     var apr = db.collection("products")//.where("category", "==", "sport"); //เลือกเฉพาะ
     apr.get().then(function (querySnapshot) {
       /*querySnapshot.forEach(function (doc) {
@@ -267,8 +267,15 @@ db.settings({
       $('#allP').html(html);
     })
   }
-
-
+      else{var apr =db.collection("PRODUCTS").where("category","==",name1);
+      apr.get().then(function(querySnapshot));
+      }
+      var allP_template = $('#allP_template').html();
+      console.log(querySnapshot);
+      var html = ejs.render(allP_template, { allP: querySnapshot.docs });
+      $('#allP').html(html);
+    })
+  }
 
 function addNewData(){
 var data = {
