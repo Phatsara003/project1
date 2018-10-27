@@ -84,7 +84,7 @@ db.settings({
       <script id="icon_template" type="text/template">
         <ons-row style="height:120px" vertical-align="center">  
         <% categories.forEach(function(category){%>  
-        <ons-col style="background:#66ff99;" width="33%">
+        <ons-col style="background:#E9967A;" width="33%">
           <p style="text-align: center; margin: 10px;">
             <ons-icon size="60px" icon="<%= category.icon %>"></ons-icon>
           </p>
@@ -185,6 +185,10 @@ db.settings({
         $('#appname').html(data.appname);
         var style = "background: url('" + data.slides[0] + "') no-repeat center; background-size: contain;'";
         $('#carousel1').attr('style', style);
+        var style = "background: url('" + data.slides[1] + "') no-repeat center; background-size: contain;'";
+        $('#carousel2').attr('style', style);
+        var style = "background: url('" + data.slides[2] + "') no-repeat center; background-size: contain;'";
+        $('#carousel3').attr('style', style);
         var icon_template = $('#icon_template').html();
         var html = ejs.render(icon_template, { categories: data.categories });
         $('#icons').html(html);
