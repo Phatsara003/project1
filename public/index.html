@@ -35,7 +35,7 @@
         padding-left: 5px;
         padding-bottom: 5px;
         padding-right: 5px;
-        color: rgb(121, 175, 189);
+        color:orange;
       }
     </style>
   </head>
@@ -84,7 +84,7 @@
         <script id="icon_template" type="text/template">
           <ons-row style="height:120px" vertical-align="center">  
           <% categories.forEach(function(category){%>  
-          <ons-col style="background:#294644; border:solid 1px white;color: white;" width="33%"onclick="changeTab('<%= category.name %>')">
+          <ons-col style="background:orange; border:solid 1px white;color: black;" width="33%"onclick="changeTab('<%= category.name %>')">
       <p style="text-align: center; margin: 10px;" >
               <ons-icon size="60px" icon="<%= category.icon %>"></ons-icon>
             </p>
@@ -167,6 +167,7 @@
             
             
            <script id="allPr_template" type="text/template"> 
+            <ons-row>
           <% allPr.forEach(function(allPr){
             var item = allPr.data();
             %>  
@@ -181,10 +182,10 @@
                 </div>
               </ons-card>
             </ons-col>
-            <%});%>
+            <%});%></ons-row>
           </script>
     
-          </ons-row>
+          
           <ons-button onclick="addnewdata()">
             ADD DATA
           </ons-button>
@@ -192,7 +193,7 @@
         </ons-page>
       </template>
   <script>
-  
+//gethomedata  
     getHomeData();
     document.addEventListener('prechange', function (event) {
       if (event.index == 0) {
@@ -219,10 +220,12 @@
         localStorage.clear();
       }
     });
+//getchang
     function changeTab(name) {
       localStorage.setItem('name', name);
   document.getElementById('tabbar').setActiveTab(2);
 }
+//gethome
     function getHomeData() {
       $.getJSON('home.json', function (data) {
         var docRef = db.collection("UI").doc("home");
@@ -248,63 +251,38 @@
         }).catch(function (error) {
           console.log("Error getting document:", error);
         });
-        /*
-        console.log(data);
-        $('#appname').html(data.appname);
-        var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
-        $('#carousel1').attr('style', style)
-        var icon_template = $('#icon_template').html();
-        var html = ejs.render(icon_template, {categories : data.categories});
-        $('#icons').html(html);
-      });
-      */
+      
   
       })
     }
+//getcartdata
     function getCartData() {
       $.getJSON('cart.json', function (data) {
         console.log(data);
       });
     }
-  
+//getproductdata
     function getproductData(name1) {
       //Get all product firebase
       if(name1==null){
-      var apr = db.collection("PRODUCTS")//.where("category", "==", "sport"); //เลือกเฉพาะ
+      var apr = db.collection("products")
     apr.get().then(function (querySnapshot) {
-      /*querySnapshot.forEach(function (doc) {
-        var data = doc.data();
-        console.log(data);
-        var allP_template = $('#allP_template').html();
-        querySnapshot
-        var html = ejs.render(allP_template, { allP: data });
-        console.log(html);
-        $('#allP').html(html);
-        
-      })*/
+     
       var allPr_template = $('#allPr_template').html();
       console.log(querySnapshot);
       var html = ejs.render(allPr_template, { allPr: querySnapshot.docs });
       $('#allPr').html(html);
     })}
-    else{var apr = db.collection("PRODUCTS").where("category","==",name1);//.where("category", "==", "sport"); //เลือกเฉพาะ
+    else{var apr = db.collection("products").where("category","==",name1);
     apr.get().then(function (querySnapshot) {
-      /*querySnapshot.forEach(function (doc) {
-        var data = doc.data();
-        console.log(data);
-        var allP_template = $('#allP_template').html();
-        querySnapshot
-        var html = ejs.render(allP_template, { allP: data });
-        console.log(html);
-        $('#allP').html(html);
-        
-      })*/
+      
       var allPr_template = $('#allPr_template').html();
       console.log(querySnapshot);
       var html = ejs.render(allPr_template, { allPr: querySnapshot.docs });
       $('#allPr').html(html);
     })}
   }
+  //addnewdata
       function addNewData() {
         var data = {
           pid : 5,
@@ -312,7 +290,7 @@
           price : 5000,
           category : 'Eletronic'
         }
-        db.collection("PRODUCTS").add(data)
+        db.collection("products").add(data)
         .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
 })
