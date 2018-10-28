@@ -15,11 +15,11 @@
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyDwR89ZYo757lcF71fBKfKGEdgAMEvh7r0",
-    authDomain: "shopee-bc901.firebaseapp.com",
-    databaseURL: "https://shopee-bc901.firebaseio.com",
-    projectId: "shopee-bc901",
-    storageBucket: "shopee-bc901.appspot.com",
-    messagingSenderId: "650888827175"
+      authDomain: "shopee-bc901.firebaseapp.com",
+      databaseURL: "https://shopee-bc901.firebaseio.com",
+      projectId: "shopee-bc901",
+      storageBucket: "shopee-bc901.appspot.com",
+      messagingSenderId: "650888827175"
     };
     firebase.initializeApp(config);
     // Initialize Cloud Firestore through Firebase
@@ -31,57 +31,62 @@
     });
   </script>
   <style>
-      .toolbaricon {
-        padding-left: 5px;
-        padding-bottom: 5px;
-        padding-right: 5px;
-        color:orange;
-      }
-    </style>
-  </head>
+    .toolbaricon {
+      padding-left: 5px;
+      padding-bottom: 5px;
+      padding-right: 5px;
+      color: orange;
+    }
+  </style>
+</head>
+
+<body>
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-icon class="toolbaricon" size="30px" icon="fa-shopping-bag">
+        </ons-icon>
+      </div>
+      <div class="center" id="appname">#</div>
+      <div class="right">
+        <ons-icon class="toolbaricon" size="30px" icon="md-help">
+        </ons-icon>
+      </div>
+    </ons-toolbar>
+
+
+
   
-  
-  <body>
-    <ons-page>
-      <ons-toolbar>
-        <div class="left">
-          <ons-icon class="toolbaricon" size="30px" icon="fa-shopping-bag">
-          </ons-icon>
-        </div>
-        <div class="center" id="appname">#</div>
-        <div class="right">
-          <ons-icon class="toolbaricon" size="30px" icon="md-help">
-          </ons-icon>
-        </div>
-      </ons-toolbar>
-  
-      <ons-tabbar swipeable position="auto" id="tabbar">
-        <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" badge="7" active>
-        </ons-tab>
-        <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
-        </ons-tab>
-        <ons-tab page="tab3.html" label="AllProduct" icon="fa-star" active-icon="fa-star">
-        </ons-tab>
-      </ons-tabbar>
-    </ons-page>
-  
-    <template id="tab1.html">
-      <ons-page id="Tab1">
-        <p style="text-align: center; margin-top: 10px;">
-          <ons-search-input placeholder="Search" onchange="ons.notification.alert('Searched for: ' + this.value)"></ons-search-input>
-        </p>
-        <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
-          <ons-carousel-item id="carousel1" style="background: url('') no-repeat center; background-size: contain;">
-          </ons-carousel-item>
-          <ons-carousel-item id="carousel2" style="background: url('') no-repeat center; background-size: contain;">
-          </ons-carousel-item>
-          <ons-carousel-item id="carousel3" style="background: url('') no-repeat center; background-size: contain;">
-          </ons-carousel-item>
-        </ons-carousel>
-  
-        <div id="icons"></div>
-  
-        <script id="icon_template" type="text/template">
+    <ons-tabbar swipeable position="auto" id="tabbar">
+      <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" badge="7" active>
+      </ons-tab>
+      <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
+      </ons-tab>
+      <ons-tab page="tab3.html" label="AllProduct" icon="fa-star" active-icon="fa-star">
+      </ons-tab>
+    </ons-tabbar>
+  </ons-page>
+ 
+
+
+
+  <template id="tab1.html">
+    <ons-page id="Tab1">
+      <p style="text-align: center; margin-top: 10px;">
+        <ons-search-input placeholder="Search" onchange="ons.notification.alert('Searched for: ' + this.value)"></ons-search-input>
+      </p>
+      <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
+        <ons-carousel-item id="carousel1" style="background: url('') no-repeat center; background-size: contain;">
+        </ons-carousel-item>
+        <ons-carousel-item id="carousel2" style="background: url('') no-repeat center; background-size: contain;">
+        </ons-carousel-item>
+        <ons-carousel-item id="carousel3" style="background: url('') no-repeat center; background-size: contain;">
+        </ons-carousel-item>
+      </ons-carousel>
+
+      <div id="icons"></div>
+
+      <script id="icon_template" type="text/template">
           <ons-row style="height:120px" vertical-align="center">  
           <% categories.forEach(function(category){%>  
           <ons-col style="background:orange; border:solid 1px white;color: black;" width="33%"onclick="changeTab('<%= category.name %>')">
@@ -96,77 +101,82 @@
           <%});%>
           </ons-row>
           </script>
+
+
+    </ons-page>
+  </template>
+
+
   
+  <template id="tab2.html">
+    <ons-page id="Tab2">
+      <ons-list>
+        <ons-list-header>Shopping Cart</ons-list-header>
+        <ons-list-item>
+          <div class="left">
+            <img class="list-item__thumbnail" src="images/item1.jpg">
+          </div>
+          <div class="center">
+            <span class="list-item__title">Apple Watch Series 3 GPS 42mm Grey</span>
+            <span class="list-item__subtitle" style="color: blue">฿12,650.00</span>
+          </div>
+          <div class="right">
+            <p style="text-align: center; margin: 10px;">
+              <ons-icon style="color: grey" size="30px" icon="md-delete"></ons-icon>
+            </p>
+          </div>
+        </ons-list-item>
+        <ons-list-item>
+          <div class="left">
+            <img class="list-item__thumbnail" src="images/item2.jpg">
+          </div>
+          <div class="center">
+            <span class="list-item__title">MICROLAB SPEAKER 2.1</span>
+            <span class="list-item__subtitle" style="color: blue">฿1,570.00</span>
+          </div>
+          <div class="right">
+            <p style="text-align: center; margin: 10px;">
+              <ons-icon style="color: grey" size="30px" icon="md-delete"></ons-icon>
+            </p>
+          </div>
+        </ons-list-item>
+        <ons-list-item>
+          <div class="left">
+            <img class="list-item__thumbnail" src="images/item3.jpg">
+          </div>
+          <div class="center">
+            <span class="list-item__title">Nike Air Max 90 ดำเทาแดง เบอร์ 40</span>
+            <span class="list-item__subtitle" style="color: blue">฿2,990.00</span>
+          </div>
+          <div class="right">
+            <p style="text-align: center; margin: 10px;">
+              <ons-icon style="color: grey" size="30px" icon="md-delete"></ons-icon>
+            </p>
+          </div>
+        </ons-list-item>
+      </ons-list>
+      <p style="text-align: center; margin: 10px;">
+        <ons-button modifier="large">PROCEED TO PAY</ons-button>
+      </p>
+    </ons-page>
+  </template>
+
+
   
-      </ons-page>
-    </template>
-  
-    <template id="tab2.html">
-      <ons-page id="Tab2">
-        <ons-list>
-          <ons-list-header>Shopping Cart</ons-list-header>
-          <ons-list-item>
-            <div class="left">
-              <img class="list-item__thumbnail" src="images/item1.jpg">
-            </div>
-            <div class="center">
-              <span class="list-item__title">Apple Watch Series 3 GPS 42mm Grey</span>
-              <span class="list-item__subtitle" style="color: blue">฿12,650.00</span>
-            </div>
-            <div class="right">
-              <p style="text-align: center; margin: 10px;">
-                <ons-icon style="color: grey" size="30px" icon="md-delete"></ons-icon>
-              </p>
-            </div>
-          </ons-list-item>
-          <ons-list-item>
-            <div class="left">
-              <img class="list-item__thumbnail" src="images/item2.jpg">
-            </div>
-            <div class="center">
-              <span class="list-item__title">MICROLAB SPEAKER 2.1</span>
-              <span class="list-item__subtitle" style="color: blue">฿1,570.00</span>
-            </div>
-            <div class="right">
-              <p style="text-align: center; margin: 10px;">
-                <ons-icon style="color: grey" size="30px" icon="md-delete"></ons-icon>
-              </p>
-            </div>
-          </ons-list-item>
-          <ons-list-item>
-            <div class="left">
-              <img class="list-item__thumbnail" src="images/item3.jpg">
-            </div>
-            <div class="center">
-              <span class="list-item__title">Nike Air Max 90 ดำเทาแดง เบอร์ 40</span>
-              <span class="list-item__subtitle" style="color: blue">฿2,990.00</span>
-            </div>
-            <div class="right">
-              <p style="text-align: center; margin: 10px;">
-                <ons-icon style="color: grey" size="30px" icon="md-delete"></ons-icon>
-              </p>
-            </div>
-          </ons-list-item>
-        </ons-list>
-        <p style="text-align: center; margin: 10px;">
-          <ons-button modifier="large">PROCEED TO PAY</ons-button>
-        </p>
-      </ons-page>
-    </template>
-  
-    <template id="tab3.html">
-        <ons-page id="Tab3">
-          <p style="text-align: center; margin-top: 10px;">
-            <ons-search-input placeholder="Search" onchange="ons.notification.alert('Searched for: ' + this.value)"></ons-search-input>
-          </p>
-          <hr>
-          <p><b>แบรนด์สุดฮิต</b> อัพเดทใหม่วันนี้</p>
-          
-          <ons-row>
-              <div id="allPr"></div>
-            
-            
-           <script id="allPr_template" type="text/template"> 
+  <template id="tab3.html">
+    <ons-page id="Tab3">
+      <p style="text-align: center; margin-top: 10px;">
+        <ons-search-input placeholder="Search" onchange="ons.notification.alert('Searched for: ' + this.value)"></ons-search-input>
+      </p>
+      <hr>
+      <p>
+        <b>แบรนด์สุดฮิต</b> อัพเดทใหม่วันนี้</p>
+
+      <ons-row>
+        <div id="allPr"></div>
+
+
+        <script id="allPr_template" type="text/template"> 
             <ons-row>
           <% allPr.forEach(function(allPr){
             var item = allPr.data();
@@ -184,16 +194,19 @@
             </ons-col>
             <%});%></ons-row>
           </script>
-    
-          
-          <ons-button onclick="addnewdata()">
-            ADD DATA
-          </ons-button>
-    
-        </ons-page>
-      </template>
+
+
+        <ons-button onclick="addnewdata()">
+          ADD DATA
+        </ons-button>
+
+    </ons-page>
+  </template>
   <script>
-//gethomedata  
+
+
+    
+    //gethomedata  
     getHomeData();
     document.addEventListener('prechange', function (event) {
       if (event.index == 0) {
@@ -204,28 +217,25 @@
         console.log('Cart clicked');
         // get data for cart screen  
         getCartData();
-      }else if (event.index == 2) {
+      } else if (event.index == 2) {
 
         console.log('All product clicked');
         var name1 = localStorage.getItem('name');
-        console.log("test"+name1)
+        console.log("test" + name1)
         // get data for all product screen  
-        if(name1==null){
+        if (name1 == null) {
           console.log(name1)
-          getproductData();}
-        else{
+          getproductData();
+        }
+        else {
 
           getproductData(name1);
         }
         localStorage.clear();
       }
     });
-//getchang
-    function changeTab(name) {
-      localStorage.setItem('name', name);
-  document.getElementById('tabbar').setActiveTab(2);
-}
-//gethome
+
+
     function getHomeData() {
       $.getJSON('home.json', function (data) {
         var docRef = db.collection("UI").doc("home");
@@ -251,60 +261,77 @@
         }).catch(function (error) {
           console.log("Error getting document:", error);
         });
-      
-  
+
+
       })
     }
-//getcartdata
+
+
+
+    //getchang
+    function changeTab(name) {
+      localStorage.setItem('name', name);
+      document.getElementById('tabbar').setActiveTab(2);
+    }
+
+
+
+    //getcartdata
     function getCartData() {
       $.getJSON('cart.json', function (data) {
         console.log(data);
       });
     }
-//getproductdata
+
+
+
+    //getproductdata(all)
     function getproductData(name1) {
       //Get all product firebase
-      if(name1==null){
-      var apr = db.collection("products")
-    apr.get().then(function (querySnapshot) {
-     
-      var allPr_template = $('#allPr_template').html();
-      console.log(querySnapshot);
-      var html = ejs.render(allPr_template, { allPr: querySnapshot.docs });
-      $('#allPr').html(html);
-    })}
-    else{var apr = db.collection("products").where("category","==",name1);
-    apr.get().then(function (querySnapshot) {
-      
-      var allPr_template = $('#allPr_template').html();
-      console.log(querySnapshot);
-      var html = ejs.render(allPr_template, { allPr: querySnapshot.docs });
-      $('#allPr').html(html);
-    })}
-  }
-  //addnewdata
-      function addNewData() {
-        var data = {
-          pid : 5,
-          titlee : 'IPhoneXS',
-          price : 5000,
-          category : 'Eletronic'
-        }
-        db.collection("products").add(data)
-        .then(function(docRef) {
-    console.log("Document written with ID: ", docRef.id);
-})
-.catch(function(error) {
-    console.error("Error adding document: ", error);
-});
+      if (name1 == null) {
+        var apr = db.collection("products")
+        apr.get().then(function (querySnapshot) {
 
+          var allPr_template = $('#allPr_template').html();
+          console.log(querySnapshot);
+          var html = ejs.render(allPr_template, { allPr: querySnapshot.docs });
+          $('#allPr').html(html);
+        })
       }
+      else {
+        var apr = db.collection("products").where("category", "==", name1);
+        apr.get().then(function (querySnapshot) {
 
-    
+          var allPr_template = $('#allPr_template').html();
+          console.log(querySnapshot);
+          var html = ejs.render(allPr_template, { allPr: querySnapshot.docs });
+          $('#allPr').html(html);
+        })
+      }
+    }
+
+
+
+    //addnewdata
+    function addNewData() {
+      var data = {
+        pid: 5,
+        titlee: 'IPhoneXS',
+        price: 5000,
+        category: 'Eletronic'
+      }
+      db.collection("products").add(data)
+        .then(function (docRef) {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+          console.error("Error adding document: ", error);
+        });
+
+    }
+
+
   </script>
-  </body>
-  
-  
-  
-  
-  </html>
+</body>
+
+</html>
