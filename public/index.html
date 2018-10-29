@@ -41,6 +41,7 @@
 </head>
 
 <body>
+  <ons-navigator swipeable id="myNavigator">
   <ons-page>
     <ons-toolbar>
       <div class="left">
@@ -66,7 +67,7 @@
       </ons-tab>
     </ons-tabbar>
   </ons-page>
- 
+ </ons-navigator>
 
 
 <!-- teb1 -->
@@ -181,13 +182,13 @@
           <% allPr.forEach(function(allPr){
             var item = allPr.data();
             %>  
-            <ons-col width="100%">
+            <ons-col width="100%" onclick="getDetail('<%=item.title%>');" >
               <ons-card>
-                <img src="<%=item.photo%>" alt="Onsen UI" style="width: 100%">
+                <img src="<%=item.photo[0]%>" alt="Onsen UI" style="width: 100%">
                 <div class="title">
                   <%=item.title%>
                 </div>
-                <div class="content" id="Pdetail">
+                <div class="content" id="Pdetail">   [" 0"," 1"]
                   Price: <%= item.price %>
                 </div>
               </ons-card>
@@ -202,6 +203,60 @@
 
     </ons-page>
   </template>
+
+  <template id="detailP.html">
+      <ons-page>
+        <script>
+          var datadep = localStorage.getItem('getDep');
+          console.log(datadep)
+        </script>
+        <ons-toolbar>
+          <div class="left">
+            <ons-back-button>Back</ons-back-button>
+          </div>
+          <div class="center">Detail</div>
+        </ons-toolbar>
+  
+        <div id="showDep"></div>
+  
+        <script id="Detailproduct_template" type="text/template">
+                <ons-card>
+                  <% dataDep.forEach(function(dataDep){   
+                          var data = dataDep.data(); %>
+                    <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
+                      
+                          <ons-carousel-item id="carousel1DeP" style="background: url('<%= data.photo[0]%>') no-repeat center; background-size: contain;">
+                          </ons-carousel-item>
+                          <ons-carousel-item id="carousel2DeP" style="background: url('<%= data.photo[1]%>') no-repeat center; background-size: contain;">
+                          </ons-carousel-item>
+                          <ons-carousel-item id="carousel3DeP" style="background: url('<%= data.photo[2]%>') no-repeat center; background-size: contain;">
+                          </ons-carousel-item>
+            
+                   </ons-carousel>
+                        
+                    <div class="title">
+                      <%= data.price%>
+                    </div>
+                    <div class="content">
+                      <div>
+                        <%= data.title %>
+                      </div>
+                      <ons-list>
+                        <ons-list-header>Bindings</ons-list-header>
+                        <ons-list-item>Vue</ons-list-item>
+                        <ons-list-item>Angular</ons-list-item>
+                        <ons-list-item>React</ons-list-item>
+                      </ons-list>
+                    </div>
+                    <%})%>
+                  </ons-card>
+                  
+             </script>
+  
+      </ons-page>
+    </template>
+  </body>
+
   <script>
 
 
@@ -310,7 +365,16 @@
       }
     }
 
+function showDetailP() {
+    var dataproduct = localStorage.getItem('getDep');
+    var apr = db.collection("products").where("title", "==", dataproduct);
+    apr.get().then(function (querySnapshot) {
+      var Detailproduct_template = $('#Detailproduct_template').html();
+      var html = ejs.render(Detailproduct_template, { dataDep: querySnapshot.docs });
+      $('#showDep').html(html);
+    })
 
+  }
 
     //addnewdata
     function addNewData() {
@@ -330,8 +394,17 @@
 
     }
 
+    
+
+   function getDetail(getDep) {
+    localStorage.setItem("getDep", getDep)
+    showDetailP();
+    myNavigator.pushPage('detailP.html');
+
+  }
+
+
 
   </script>
-</body>
 
 </html>
