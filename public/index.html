@@ -74,7 +74,7 @@
   <template id="tab1.html">
     <ons-page id="Tab1">
       <p style="text-align: center; margin-top: 10px;">
-        <ons-search-input placeholder="Search" onchange="ons.notification.alert('Searched for: ' + this.value)"></ons-search-input>
+        <ons-search-input placeholder="Search" onchange="search(this.value)"></ons-search-input>
       </p>
       <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
         <ons-carousel-item id="carousel1" style="background: url('') no-repeat center; background-size: contain;">
@@ -214,21 +214,25 @@
                           </ons-carousel-item>
             
                    </ons-carousel>
-                        
-                    <div class="title">
-                      <%= data.price%>
-                    </div>
-                    <div class="content">
-                      <div>
-                        <%= data.title %>
-                      </div>
-                      <ons-list>
-                        <ons-list-header>Bindings</ons-list-header>
-                        <ons-list-item>Vue</ons-list-item>
-                        <ons-list-item>Angular</ons-list-item>
-                        <ons-list-item>React</ons-list-item>
-                      </ons-list>
-                    </div>
+                   <ons-list>
+
+                    <ons-list-header style="background: orange;" ><b>Detail product</b></ons-list-header>
+                    <ons-list-item>category  
+                      <div class="brand" style="margin-left:70px;"><%=data.category%></div>
+                    </ons-list-item>
+                    <ons-list-item>price    
+                      <div class="price" style="margin-left:90px;"><%=data.price%></div>
+                    </ons-list-item>
+  
+                    <ons-list-item>title
+                      <div class="title" style="margin-left:95px;"><%=data.title%></div>
+                    </ons-list-item>
+                    
+  
+                  </ons-list>
+                  
+                </div><br><br>
+                    
                     <ons-button onclick="addtocart('<%= data.title %>')">Add to Cart</ons-button>
                     <%})%>
                   </ons-card>
@@ -243,33 +247,32 @@
 
 
     
-    //gethomedata  
-    getHomeData();
-    document.addEventListener('prechange', function (event) {
-      if (event.index == 0) {
-        console.log('Home clicked');
-        // get data for home screen  
-        getHomeData();
-      } else if (event.index == 1) {
-        console.log('Cart clicked');
-        getData2cart()
-      } else if (event.index == 2) {
-
-        console.log('All product clicked');
-        var name1 = localStorage.getItem('name');
-        console.log("test" + name1)
-        // get data for all product screen  
-        if (name1 == null) {
-          console.log(name1)
-          getproductData();
-        }
-        else {
-
-          getproductData(name1);
-        }
-        localStorage.clear();
+  //gethomedata  
+  getHomeData();
+  tatol();
+  document.addEventListener('prechange', function (event) {
+    if (event.index == 0) {
+      console.log('Home clicked');
+      getHomeData();
+    } else if (event.index == 1) {
+      console.log('Cart clicked');
+      getData2cart();
+    } else if (event.index == 2) {
+      console.log('All product clicked');
+      var name1 = localStorage.getItem('name');
+      var items = localStorage.getItem('items');
+      if (name1 == null && items == null) {
+        console.log(name1)
+        getproductData();
       }
-    });
+      else if (name1 != null && items == null) {
+        getproductData(name1);
+      }
+      else if (name1 == null && items != null) { }
+      
+      localStorage.clear();
+    }
+  });
 
 
     function getHomeData() {
@@ -361,7 +364,7 @@ function showDetailP() {
     function addNewData() {
       var data = {
         pid: 5,
-        titlee: 'IPhoneXS',
+        title: 'IPhoneXS',
         price: 5000,
         category: 'Eletronic'
       }
@@ -385,13 +388,13 @@ function showDetailP() {
   }
 
 var dataCart = [];
-function addtocart(add2cart){
-  localStorage.clear('quentinTarantino');
-localStorage.setItem('quentinTarantino',add2cart);
+function addtocart(addproductcart){
+localStorage.clear('quentinTarantino');
+localStorage.setItem('quentinTarantino',addproductcart);
 var retrievedData = localStorage.getItem("quentinTarantino");
 console.log(retrievedData);
 dataCart.push(retrievedData);
-alert(dataCart);
+//alert(dataCart);
 }
 
 function getData2cart(){
@@ -411,6 +414,41 @@ function getData2cart(){
     
   })
 }
+
+//search
+function search(search) {
+    const filterItems = (needle, heystack) => {
+    let query = needle.toLowerCase();
+    return heystack.filter(item => item.data().title.toLowerCase().indexOf(needle) >= 0);
+    }
+    console.log(filterItems(search, data));
+
+    localStorage.setItem('items',item);
+      var item =filterItems(search,data);
+    console.log(item)
+    test(item);
+    document.getElementById('tabbar').setActiveTab(2);
+  }
+  const data = []
+
+  function tatol() {
+    console.log(search);
+    db.collection("products").get()
+      .then(function (querySnapshot) {
+        querySnapshot.docs.forEach(function (item) {
+          data.push(item)
+          console.log(data)
+        });
+
+      })
+  }
+  function test(title) {
+    var allPr_template = $('#allPr_template').html();
+    var html = ejs.render(allPr_template, { allPr:title });
+    $('#allPr').html(html);
+
+
+  }
   </script>
 
 </html>
