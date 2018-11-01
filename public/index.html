@@ -216,7 +216,7 @@
                    </ons-carousel>
                    <ons-list>
 
-                    <ons-list-header style="background:orange;" ><b>Detail product</b></ons-list-header>
+                    <ons-list-header style="background: orange;" ><b>Detail product</b></ons-list-header>
                     <ons-list-item>category  
                       <div class="brand" style="margin-left:70px;"><%=data.category%></div>
                     </ons-list-item>
@@ -232,8 +232,9 @@
                   </ons-list>
                   
                 </div><br><br>
-                    
-                    <ons-button onclick="addtocart('<%= data.title %>')">Add to Cart</ons-button>
+                    <div style="text-align: center;">
+                    <ons-button onclick="addtocart('<%= data.title %>')" >Add to Cart</ons-button>
+                  </div>
                     <%})%>
                   </ons-card>
                   
