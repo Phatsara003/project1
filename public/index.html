@@ -395,6 +395,10 @@ localStorage.setItem('quentinTarantino',addproductcart);
 var retrievedData = localStorage.getItem("quentinTarantino");
 console.log(retrievedData);
 dataCart.push(retrievedData);
+
+ons.notification.toast('Add item Success!', {
+    timeout: 2000
+  });
 //alert(dataCart);
 }
 
